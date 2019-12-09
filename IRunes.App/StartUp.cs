@@ -1,31 +1,23 @@
-﻿using IRunes.App.Controllers;
-
-namespace IRunes.App
+﻿namespace IRunes.App
 {
+    using IRunes.App.Controllers;
+    using IRunes.Data;
+    using SIS.HTTP.Enums;
+    using SIS.MvcFramework;
     using SIS.WebServer;
     using SIS.WebServer.Result;
     using SIS.WebServer.Routing;
-    using SIS.HTTP.Enums;
-    using Data;
 
-    public class Launcher
+    public class StartUp : IMvcApplication
     {
-        public static void Main(string[] args)
+        public void Configure(ServerRoutingTable serverRoutingTable)
         {
             using (var context = new RunesDbContext())
             {
                 context.Database.EnsureCreated();
             }
+                        
 
-            ServerRoutingTable serverRoutingTable = new ServerRoutingTable();
-            Configure(serverRoutingTable);
-
-            Server server = new Server(8000, serverRoutingTable);
-            server.Run();
-        }
-
-        private static void Configure(ServerRoutingTable serverRoutingTable)
-        {
             #region Home Routes
 
             serverRoutingTable.Add(HttpRequestMethod.Get, "/", request => new RedirectResult("/Home/Index"));
@@ -59,6 +51,12 @@ namespace IRunes.App
             serverRoutingTable.Add(HttpRequestMethod.Get, "/Tracks/Details", request => new TracksController().Details(request));
 
             #endregion
+
+            
+        }
+
+        public void ConfigureServices()
+        {
         }
     }
 }
