@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using IRunes.App.Extensions;
-using IRunes.Data;
-using IRunes.Models;
-using SIS.HTTP.Requests.Contracts;
-using SIS.HTTP.Responses.Contracts;
-
-namespace IRunes.App.Controllers
+﻿namespace IRunes.App.Controllers
 {
-    public class TracksController : BaseController
+    using IRunes.App.Extensions;
+    using IRunes.Data;
+    using IRunes.Models;
+    using SIS.HTTP.Requests.Contracts;
+    using SIS.HTTP.Responses.Contracts;
+    using SIS.MvcFramework;
+    using SIS.MvcFramework.Attributes;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class TracksController : Controller
     {
         public IHttpResponse Create(IHttpRequest httpRequest)
         {
@@ -23,6 +25,7 @@ namespace IRunes.App.Controllers
             return this.View();
         }
 
+        [HttpPost(ActionName ="Create")]
         public IHttpResponse CreateConfirm(IHttpRequest httpRequest)
         {
             if (!this.IsLoggedIn(httpRequest))
