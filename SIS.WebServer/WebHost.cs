@@ -4,9 +4,12 @@
     using System.Linq;
     using System.Reflection;
     using SIS.HTTP.Enums;
+    using SIS.HTTP.Responses;
     using SIS.HTTP.Responses.Contracts;
     using SIS.MvcFramework.Attributes;
-    using SIS.WebServer;
+    using SIS.MvcFramework.Attributes.Action;
+    using SIS.MvcFramework.Attributes.Security;
+    using SIS.MvcFramework.Result;
     using SIS.WebServer.Routing;
     using SIS.WebServer.Routing.Contracts;
 
@@ -42,12 +45,16 @@
             foreach (var controller in controllers)
             {
                 var actions = controller.GetMethods(BindingFlagsConstant)
-                    .Where(m => !m.IsSpecialName);
+                    .Where(m => !m.IsSpecialName && m.DeclaringType == controller)
+                    .Where(m => m.GetCustomAttributes()
+                    .All(a => a.GetType() != typeof(NonActionAttribute)));
 
                 foreach (var action in actions)
                 {
                     var attribute = (BaseHttpAttribute)action.GetCustomAttributes()
-                        .Where(a => a.GetType().IsSubclassOf(typeof(BaseHttpAttribute))).LastOrDefault();
+                        .Where(a => a.GetType()
+                        .IsSubclassOf(typeof(BaseHttpAttribute)))
+                        .LastOrDefault();
 
                     string path = $"/{controller.Name.Replace("Controller", string.Empty)}/{action.Name}";
 
@@ -73,8 +80,21 @@
                     serverRoutingTable.Add(httpMethod, path, request =>
                     {
                         var controllerInstance = Activator.CreateInstance(controller);
-                        var response = (IHttpResponse)action
-                            .Invoke(controllerInstance, new[] { request });
+                        ((Controller)controllerInstance).Request = request;
+
+                        // Security Authorization - TODO: Refactor this
+                        var controllerPrincipal = ((Controller)controllerInstance).User;
+                        var authorizeAttribute = action.GetCustomAttributes()
+                            .LastOrDefault(a => a.GetType() == typeof(AuthorizeAttribute)) as AuthorizeAttribute;
+
+                        if (authorizeAttribute != null && !authorizeAttribute.IsInAuthority(controllerPrincipal))
+                        {
+                            // TODO: Redirect to configured URL
+                            return new HttpResponse(HttpResponseStatusCode.Forbidden);
+                        }
+
+                        var response = (ActionResult)action
+                            .Invoke(controllerInstance, new object[0]);
 
                         return response;
                     });

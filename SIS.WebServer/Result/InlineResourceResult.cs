@@ -1,12 +1,12 @@
-﻿namespace SIS.WebServer.Result
+﻿namespace SIS.MvcFramework.Result
 {
     using SIS.HTTP.Enums;
     using SIS.HTTP.Headers;
-    using SIS.HTTP.Responses;
 
-    public class InlineResourceResult : HttpResponse
+    public class InlineResourceResult : ActionResult
     {
-        public InlineResourceResult(byte[] content, HttpResponseStatusCode responseStatusCode)
+        public InlineResourceResult(byte[] content, 
+            HttpResponseStatusCode responseStatusCode = HttpResponseStatusCode.Ok)
           : base(responseStatusCode)
         {
             this.Headers.AddHeader(new HttpHeader(HttpHeader.ContentLength, content.Length.ToString()));

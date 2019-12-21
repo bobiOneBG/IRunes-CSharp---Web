@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IRunes.Data\IRunes.Data.csproj" />
+    <ProjectReference Include="..\IRunesServices\IRunesServices.csproj" />
     <ProjectReference Include="..\SIS.WebServer\SIS.MvcFramework.csproj" />
   </ItemGroup>
 
@@ -51,6 +52,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Views\Users\Register.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\_Layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -4,14 +4,14 @@
     using SIS.HTTP.Headers;
     using System.Text;
 
-    public class HtmlResult : ActionResult
+    public class JsonResult : ActionResult
     {
-        public HtmlResult(string content,
+        public JsonResult(string jsonContent,
             HttpResponseStatusCode responseStatusCode = HttpResponseStatusCode.Ok)
             : base(responseStatusCode)
         {
-            this.Headers.AddHeader(new HttpHeader("Content-Type", "text/html; charset=utf-8"));
-            this.Content = Encoding.UTF8.GetBytes(content);
+            this.Headers.AddHeader(new HttpHeader(HttpHeader.ContentType, "application/json"));
+            this.Content = Encoding.UTF8.GetBytes(jsonContent);
         }
     }
 }

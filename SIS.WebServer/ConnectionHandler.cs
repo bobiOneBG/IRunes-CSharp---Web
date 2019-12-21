@@ -1,23 +1,25 @@
-﻿using System;
-using System.IO;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using SIS.HTTP.Common;
-using SIS.HTTP.Cookies;
-using SIS.HTTP.Enums;
-using SIS.HTTP.Exceptions;
-using SIS.HTTP.Requests;
-using SIS.HTTP.Requests.Contracts;
-using SIS.HTTP.Responses.Contracts;
-using SIS.HTTP.Sessions.Contracts;
-using SIS.WebServer.Result;
-using SIS.WebServer.Routing.Contracts;
-using SIS.WebServer.Sessions;
+﻿
 
-namespace SIS.WebServer
+namespace SIS.MvcFramework
 {
+    using System;
+    using System.IO;
+    using System.Net.Sockets;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+    using SIS.HTTP.Common;
+    using SIS.HTTP.Cookies;
+    using SIS.HTTP.Enums;
+    using SIS.HTTP.Exceptions;
+    using SIS.HTTP.Requests;
+    using SIS.HTTP.Requests.Contracts;
+    using SIS.HTTP.Responses.Contracts;
+    using SIS.HTTP.Sessions.Contracts;
+    using SIS.MvcFramework.Result;
+    using SIS.WebServer.Routing.Contracts;
+    using SIS.WebServer.Sessions;
+
     public class ConnectionHandler
     {
         private readonly Socket client;

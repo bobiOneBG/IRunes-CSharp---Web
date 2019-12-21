@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using SIS.HTTP.Common;
-using SIS.WebServer.Routing.Contracts;
-
-namespace SIS.WebServer
+﻿namespace SIS.MvcFramework
 {
+    using SIS.HTTP.Common;
+    using SIS.WebServer.Routing.Contracts;
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading.Tasks;
+
     public class Server
     {
         private const string LocalHostIpAddress = "127.0.0.1";
