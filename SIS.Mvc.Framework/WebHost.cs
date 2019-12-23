@@ -1,17 +1,17 @@
 ﻿namespace SIS.MvcFramework
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
     using SIS.HTTP.Enums;
     using SIS.HTTP.Responses;
-    using SIS.HTTP.Responses.Contracts;
     using SIS.MvcFramework.Attributes;
     using SIS.MvcFramework.Attributes.Action;
     using SIS.MvcFramework.Attributes.Security;
     using SIS.MvcFramework.Result;
     using SIS.WebServer.Routing;
     using SIS.WebServer.Routing.Contracts;
+    using SIS.WebServer.Sessions;
+    using System;
+    using System.Linq;
+    using System.Reflection;
 
     public static class WebHost
     {
@@ -19,9 +19,11 @@
               BindingFlags.DeclaredOnly |
                   BindingFlags.Public |
                   BindingFlags.Instance;
+
         public static void Start(IMvcApplication application)
         {
             IServerRoutingTable serverRoutingTable = new ServerRoutingTable();
+            IHttpSessionStorage sessionStorage = new HttpSessionStorage();
 
             AutoRegisterRoutes(application, serverRoutingTable);
 
@@ -29,7 +31,7 @@
 
             application.Configure(serverRoutingTable);
 
-            Server server = new Server(8000, serverRoutingTable);
+            Server server = new Server(8000, serverRoutingTable, sessionStorage);
             server.Run();
         }
 

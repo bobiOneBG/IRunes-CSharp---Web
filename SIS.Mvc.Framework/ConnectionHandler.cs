@@ -1,13 +1,5 @@
-﻿
-
-namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
 {
-    using System;
-    using System.IO;
-    using System.Net.Sockets;
-    using System.Reflection;
-    using System.Text;
-    using System.Threading.Tasks;
     using SIS.HTTP.Common;
     using SIS.HTTP.Cookies;
     using SIS.HTTP.Enums;
@@ -19,20 +11,30 @@ namespace SIS.MvcFramework
     using SIS.MvcFramework.Result;
     using SIS.WebServer.Routing.Contracts;
     using SIS.WebServer.Sessions;
+    using System;
+    using System.IO;
+    using System.Net.Sockets;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
 
     public class ConnectionHandler
     {
         private readonly Socket client;
 
+        private readonly IHttpSessionStorage sessionStorage;
+
         private readonly IServerRoutingTable serverRoutingTable;
 
-        public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable)
+        public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable, IHttpSessionStorage sessionStorage)
         {
             CoreValidator.ThrowIfNull(client, nameof(client));
             CoreValidator.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
+            CoreValidator.ThrowIfNull(sessionStorage, nameof(sessionStorage));
 
             this.client = client;
             this.serverRoutingTable = serverRoutingTable;
+            this.sessionStorage = sessionStorage;
         }
 
         private async Task<IHttpRequest> ReadRequestAsync()
@@ -108,9 +110,9 @@ namespace SIS.MvcFramework
 
                 string sessionId = cookie.Value;
 
-                if (HttpSessionStorage.ContainsSession(sessionId))
+                if (sessionStorage.ContainsSession(sessionId))
                 {
-                    httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+                    httpRequest.Session = this.sessionStorage.GetSession(sessionId);
                 }
             }
 
@@ -118,7 +120,7 @@ namespace SIS.MvcFramework
             {
                 string sessionId = Guid.NewGuid().ToString();
 
-                httpRequest.Session = HttpSessionStorage.GetSession(sessionId);
+                httpRequest.Session = this.sessionStorage.GetSession(sessionId);
             }
 
             return httpRequest.Session?.Id;
@@ -126,7 +128,7 @@ namespace SIS.MvcFramework
 
         private void SetResponseSession(IHttpResponse httpResponse, string sessionId)
         {
-            IHttpSession responseSession = HttpSessionStorage.GetSession(sessionId);
+            IHttpSession responseSession =this. sessionStorage.GetSession(sessionId);
 
             if (responseSession.IsNew)
             {

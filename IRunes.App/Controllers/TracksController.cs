@@ -1,6 +1,7 @@
 ﻿namespace IRunes.App.Controllers
 {
     using IRunes.App.Extensions;
+    using IRunes.App.ViewModels;
     using IRunes.Data;
     using IRunes.Models;
     using IRunesServices;
@@ -81,7 +82,7 @@
 
                 this.ViewData["AlbumId"] = albumId;
                 this.ViewData["Track"] = trackFromDb.ToHtmlDetails(albumId);
-                return this.View();
+                return this.View(new AlbumDetailsViewModel { AlbumId = albumId });
             }
         }
     }

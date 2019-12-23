@@ -1,7 +1,6 @@
 ﻿namespace IRunes.App.Controllers
 {
     using IRunes.App.Extensions;
-    using IRunes.App.ViewModels;
     using IRunes.Data;
     using IRunes.Models;
     using IRunesServices;

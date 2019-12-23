@@ -2,6 +2,7 @@
 {
     using SIS.HTTP.Common;
     using SIS.WebServer.Routing.Contracts;
+    using SIS.WebServer.Sessions;
     using System;
     using System.Net;
     using System.Net.Sockets;
@@ -17,21 +18,25 @@
 
         private IServerRoutingTable serverRoutingTable;
 
+        private readonly IHttpSessionStorage sessionStorage;
+
         private bool isRunning;
 
-        public Server(int port, IServerRoutingTable serverRoutingTable)
+        public Server(int port, IServerRoutingTable serverRoutingTable, IHttpSessionStorage sessionStorage)
         {
             CoreValidator.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
+            CoreValidator.ThrowIfNull(sessionStorage, nameof(sessionStorage));
 
             this.port = port;
             this.serverRoutingTable = serverRoutingTable;
+            this.sessionStorage = sessionStorage;
 
             this.tcpListener = new TcpListener(IPAddress.Parse(LocalHostIpAddress), port);
         }
 
         private async Task ListenAsync(Socket client)
         {
-            var connectionHandler = new ConnectionHandler(client, this.serverRoutingTable);
+            var connectionHandler = new ConnectionHandler(client, this.serverRoutingTable, sessionStorage);
             await connectionHandler.ProcessRequestAsync();
         }
 
