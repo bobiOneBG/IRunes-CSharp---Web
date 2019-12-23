@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using SIS.HTTP.Common;
-using SIS.HTTP.Sessions.Contracts;
-
-namespace SIS.HTTP.Sessions
+﻿namespace SIS.HTTP.Sessions
 {
+    using SIS.Common;
+    using SIS.HTTP.Sessions.Contracts;
+    using System.Collections.Generic;
+
     public class HttpSession : IHttpSession
     {
         private readonly Dictionary<string, object> sessionParameters;
@@ -21,7 +21,7 @@ namespace SIS.HTTP.Sessions
 
         public object GetParameter(string parameterName)
         {
-            CoreValidator.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
+            ValidationExtensions.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
 
             // TODO: Validation for existing parameter (maybe throw exception)
 
@@ -30,15 +30,15 @@ namespace SIS.HTTP.Sessions
 
         public bool ContainsParameter(string parameterName)
         {
-            CoreValidator.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
+            ValidationExtensions.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
 
             return this.sessionParameters.ContainsKey(parameterName);
         }
 
         public void AddParameter(string parameterName, object parameter)
         {
-            CoreValidator.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
-            CoreValidator.ThrowIfNull(parameter, nameof(parameter));
+            ValidationExtensions.ThrowIfNullOrEmpty(parameterName, nameof(parameterName));
+            ValidationExtensions.ThrowIfNull(parameter, nameof(parameter));
 
             this.sessionParameters[parameterName] = parameter;
         }

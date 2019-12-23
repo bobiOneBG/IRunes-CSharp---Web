@@ -1,15 +1,16 @@
-﻿using System.Text;
-using SIS.HTTP.Common;
-using SIS.HTTP.Cookies;
-using SIS.HTTP.Cookies.Contracts;
-using SIS.HTTP.Enums;
-using SIS.HTTP.Extensions;
-using SIS.HTTP.Headers;
-using SIS.HTTP.Headers.Contracts;
-using SIS.HTTP.Responses.Contracts;
-
-namespace SIS.HTTP.Responses
+﻿namespace SIS.HTTP.Responses
 {
+    using SIS.Common;
+    using SIS.HTTP.Common;
+    using SIS.HTTP.Cookies;
+    using SIS.HTTP.Cookies.Contracts;
+    using SIS.HTTP.Enums;
+    using SIS.HTTP.Extensions;
+    using SIS.HTTP.Headers;
+    using SIS.HTTP.Headers.Contracts;
+    using SIS.HTTP.Responses.Contracts;
+    using System.Text;
+
     public class HttpResponse : IHttpResponse
     {
         public HttpResponse()
@@ -21,7 +22,7 @@ namespace SIS.HTTP.Responses
 
         public HttpResponse(HttpResponseStatusCode statusCode) : this()
         {
-            CoreValidator.ThrowIfNull(statusCode, nameof(statusCode));
+            ValidationExtensions.ThrowIfNull(statusCode, nameof(statusCode));
             this.StatusCode = statusCode;
         }
 

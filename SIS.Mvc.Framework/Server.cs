@@ -1,5 +1,6 @@
 ﻿namespace SIS.MvcFramework
 {
+    using SIS.Common;
     using SIS.HTTP.Common;
     using SIS.WebServer.Routing.Contracts;
     using SIS.WebServer.Sessions;
@@ -24,8 +25,8 @@
 
         public Server(int port, IServerRoutingTable serverRoutingTable, IHttpSessionStorage sessionStorage)
         {
-            CoreValidator.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
-            CoreValidator.ThrowIfNull(sessionStorage, nameof(sessionStorage));
+            ValidationExtensions.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
+            ValidationExtensions.ThrowIfNull(sessionStorage, nameof(sessionStorage));
 
             this.port = port;
             this.serverRoutingTable = serverRoutingTable;

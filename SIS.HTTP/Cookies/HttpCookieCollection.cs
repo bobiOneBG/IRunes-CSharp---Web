@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using SIS.HTTP.Common;
-using SIS.HTTP.Cookies.Contracts;
-
-namespace SIS.HTTP.Cookies
+﻿namespace SIS.HTTP.Cookies
 {
+    using SIS.Common;
+    using SIS.HTTP.Common;
+    using SIS.HTTP.Cookies.Contracts;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class HttpCookieCollection : IHttpCookieCollection
     {
         private Dictionary<string, HttpCookie> httpCookies;
@@ -17,24 +18,24 @@ namespace SIS.HTTP.Cookies
 
         public void AddCookie(HttpCookie httpCookie)
         {
-            CoreValidator.ThrowIfNull(httpCookie, nameof(httpCookie));
+            ValidationExtensions.ThrowIfNull(httpCookie, nameof(httpCookie));
 
             if (!httpCookies.ContainsKey(httpCookie.Key))
             {
-                this.httpCookies.Add(httpCookie.Key, httpCookie); 
+                this.httpCookies.Add(httpCookie.Key, httpCookie);
             }
         }
 
         public bool ContainsCookie(string key)
         {
-            CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
+            ValidationExtensions.ThrowIfNullOrEmpty(key, nameof(key));
 
             return this.httpCookies.ContainsKey(key);
         }
 
         public HttpCookie GetCookie(string key)
         {
-            CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
+            ValidationExtensions.ThrowIfNullOrEmpty(key, nameof(key));
 
             // TODO: Validation for existing parameter (maybe throw exception)
 

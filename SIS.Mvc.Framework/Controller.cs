@@ -26,17 +26,6 @@
 
         public IHttpRequest Request { get; set; }
 
-        //private string ParseTemplate(string viewContent)
-        //{
-        //    foreach (var param in this.ViewData)
-        //    {
-        //        viewContent = viewContent.Replace($"@Model.{param.Key}",
-        //            param.Value.ToString());
-        //    }
-
-        //    return viewContent;
-        //}
-
         protected bool IsLoggedIn()
         {
             return this.Request.Session.ContainsParameter("principal");

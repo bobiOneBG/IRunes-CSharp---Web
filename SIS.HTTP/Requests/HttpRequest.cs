@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SIS.HTTP.Common;
-using SIS.HTTP.Cookies;
-using SIS.HTTP.Cookies.Contracts;
-using SIS.HTTP.Enums;
-using SIS.HTTP.Exceptions;
-using SIS.HTTP.Headers;
-using SIS.HTTP.Headers.Contracts;
-using SIS.HTTP.Requests.Contracts;
-using SIS.HTTP.Sessions.Contracts;
-
-namespace SIS.HTTP.Requests
+﻿namespace SIS.HTTP.Requests
 {
+    using SIS.Common;
+    using SIS.HTTP.Common;
+    using SIS.HTTP.Cookies;
+    using SIS.HTTP.Cookies.Contracts;
+    using SIS.HTTP.Enums;
+    using SIS.HTTP.Exceptions;
+    using SIS.HTTP.Headers;
+    using SIS.HTTP.Headers.Contracts;
+    using SIS.HTTP.Requests.Contracts;
+    using SIS.HTTP.Sessions.Contracts;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class HttpRequest : IHttpRequest
     {
         public HttpRequest(string requestString)
         {
-            CoreValidator.ThrowIfNullOrEmpty(requestString, nameof(requestString));
+            ValidationExtensions.ThrowIfNullOrEmpty(requestString, nameof(requestString));
 
-            this.FormData = new Dictionary<string,object>();
+            this.FormData = new Dictionary<string, object>();
             this.QueryData = new Dictionary<string, object>();
             this.Headers = new HttpHeaderCollection();
             this.Cookies = new HttpCookieCollection();
@@ -40,7 +41,7 @@ namespace SIS.HTTP.Requests
         public IHttpCookieCollection Cookies { get; }
 
         public HttpRequestMethod RequestMethod { get; private set; }
-        
+
         public IHttpSession Session { get; set; }
 
         private bool IsValidRequestLine(string[] requestLineParams)
@@ -56,7 +57,7 @@ namespace SIS.HTTP.Requests
 
         private bool IsValidRequestQueryString(string queryString, string[] queryParameters)
         {
-            CoreValidator.ThrowIfNullOrEmpty(queryString, nameof(queryString));
+            ValidationExtensions.ThrowIfNullOrEmpty(queryString, nameof(queryString));
 
             return true; //TODO: REGEX QUERY STRING
         }
@@ -144,7 +145,7 @@ namespace SIS.HTTP.Requests
                     }
 
                     ((ISet<string>)this.FormData[key]).Add(value);
-                }                
+                }
             }
         }
 

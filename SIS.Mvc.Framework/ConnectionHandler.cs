@@ -1,6 +1,6 @@
 ﻿namespace SIS.MvcFramework
 {
-    using SIS.HTTP.Common;
+    using SIS.Common;
     using SIS.HTTP.Cookies;
     using SIS.HTTP.Enums;
     using SIS.HTTP.Exceptions;
@@ -28,9 +28,9 @@
 
         public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable, IHttpSessionStorage sessionStorage)
         {
-            CoreValidator.ThrowIfNull(client, nameof(client));
-            CoreValidator.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
-            CoreValidator.ThrowIfNull(sessionStorage, nameof(sessionStorage));
+            ValidationExtensions.ThrowIfNull(client, nameof(client));
+            ValidationExtensions.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
+            ValidationExtensions.ThrowIfNull(sessionStorage, nameof(sessionStorage));
 
             this.client = client;
             this.serverRoutingTable = serverRoutingTable;
@@ -128,7 +128,7 @@
 
         private void SetResponseSession(IHttpResponse httpResponse, string sessionId)
         {
-            IHttpSession responseSession =this. sessionStorage.GetSession(sessionId);
+            IHttpSession responseSession = this.sessionStorage.GetSession(sessionId);
 
             if (responseSession.IsNew)
             {
