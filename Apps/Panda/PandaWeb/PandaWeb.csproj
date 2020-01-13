@@ -5,4 +5,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SIS.Mvc.Framework\SIS.Mvc.Framework.csproj" />
+    <ProjectReference Include="..\ClassLibrary1\Panda.Data.csproj" />
+    <ProjectReference Include="..\Panda.Services\Panda.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
+    <Folder Include="VIewModel\" />
+  </ItemGroup>
+
 </Project>

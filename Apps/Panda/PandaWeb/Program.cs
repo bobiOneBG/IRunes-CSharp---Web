@@ -1,12 +1,12 @@
 ﻿namespace PandaWeb
 {
-    using System;
+    using SIS.MvcFramework;
 
     public class Program
     {
         public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            WebHost.Start(new StartUp());
         }
     }
 }

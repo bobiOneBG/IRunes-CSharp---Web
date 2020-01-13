@@ -1,12 +1,12 @@
 ﻿namespace SIS.MvcFramework
 {
-    using SIS.WebServer.Routing;
+    using SIS.Mvc.Framework.DependancyConrainer;
     using SIS.WebServer.Routing.Contracts;
 
     public interface IMvcApplication
     {
         void Configure(IServerRoutingTable serverRoutingTable);
 
-        void ConfigureServices();//DI
+        void ConfigureServices(IServiceProvider serviceProvider);//DI
     }
 }

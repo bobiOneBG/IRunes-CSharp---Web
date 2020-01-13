@@ -143,7 +143,7 @@
             byte[] byteSegments = httpResponse.GetBytes();
 
             this.client.Send(byteSegments, SocketFlags.None);
-        }
+        } 
 
         public async Task ProcessRequestAsync()
         {
@@ -165,12 +165,14 @@
             }
             catch (BadRequestException e)
             {
-                httpResponse = new TextResult(e.Message, HttpResponseStatusCode.BadRequest);
+                httpResponse = new TextResult(e.ToString(), HttpResponseStatusCode.BadRequest);
             }
+
             catch (Exception e)
             {
-                httpResponse = new TextResult(e.Message, HttpResponseStatusCode.InternalServerError);
+                httpResponse = new TextResult(e.ToString(), HttpResponseStatusCode.InternalServerError);
             }
+
             this.PrepareResponse(httpResponse);
 
             this.client.Shutdown(SocketShutdown.Both);

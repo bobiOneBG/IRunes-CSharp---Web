@@ -1,10 +1,12 @@
 ﻿namespace IRunes.App
 {
     using IRunes.Data;
+    using IRunes.Services;
     using SIS.MvcFramework;
     using SIS.WebServer.Routing.Contracts;
+    using IServiceProvider = SIS.Mvc.Framework.DependancyConrainer.IServiceProvider;
 
-    public class StartUp : IMvcApplication
+    public class Startup : IMvcApplication
     {
         public void Configure(IServerRoutingTable serverRoutingTable)
         {
@@ -14,8 +16,11 @@
             }
         }
 
-        public void ConfigureServices()
+        public void ConfigureServices(IServiceProvider serviceProvider)
         {
+            serviceProvider.Add<IAlbumService, AlbumService>();
+            serviceProvider.Add<ITrackService, TrackService>();
+            serviceProvider.Add<IUserService, UserService>();
         }
     }
 }

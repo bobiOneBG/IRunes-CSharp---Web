@@ -30,10 +30,16 @@
     <None Update="ViewTests\TestWithoutCSharpCode.Result.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="ViewTests\UseForForeachIf.html">
+    <None Update="ViewTests\UseForForeachAndIf.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="ViewTests\UseForForeachIf.Result.html">
+    <None Update="ViewTests\UseForForeachAndIf.Result.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ViewTests\UseModelData.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ViewTests\UseModelData.Result.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

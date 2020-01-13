@@ -1,89 +1,71 @@
-﻿namespace IRunes.App.Controllers
-{
-    using IRunes.App.Extensions;
-    using IRunes.App.ViewModels;
-    using IRunes.Data;
-    using IRunes.Models;
-    using IRunesServices;
-    using SIS.MvcFramework;
-    using SIS.MvcFramework.Attributes;
-    using SIS.MvcFramework.Attributes.Security;
-    using SIS.MvcFramework.Result;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using IRunes.App.ViewModels.Tracks;
+using IRunes.Models;
+using IRunes.Services;
+using SIS.MvcFramework;
+using SIS.MvcFramework.Attributes;
+using SIS.MvcFramework.Attributes.Security;
+using SIS.MvcFramework.Mapping;
+using SIS.MvcFramework.Result;
 
+namespace IRunes.App.Controllers
+{
     public class TracksController : Controller
     {
         private readonly ITrackService trackService;
+
         private readonly IAlbumService albumService;
 
-        public TracksController()
+        public TracksController(ITrackService trackService, IAlbumService albumService)
         {
-            this.trackService = new TrackService();
-            this.albumService = new AlbumService();
+            this.trackService = trackService;
+            this.albumService = albumService;
         }
 
         [Authorize]
-        public ActionResult Create()
+        public IActionResult Create(string albumId)
         {
-            string albumId = this.Request.QueryData["albumId"].ToString();
-
-            this.ViewData["AlbumId"] = albumId;
-            return this.View();
+            return this.View(new TrackCreateViewModel{ AlbumId = albumId });
         }
 
         [Authorize]
-        [HttpPost(ActionName = "Create")]
-        public ActionResult CreateConfirm()
+        [HttpPost]
+        public IActionResult Create(TrackCreateInputModel model)
         {
-            string albumId = this.Request.QueryData["albumId"].ToString();
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/");
+            }
 
+            Track trackForDb = ModelMapper.ProjectTo<Track>(model);
 
-            Album albumFromDb = albumService.GetAlbumById(albumId);
-
-            if (albumFromDb == null)
+            if (!this.albumService.AddTrackToAlbum(model.AlbumId, trackForDb))
             {
                 return this.Redirect("/Albums/All");
             }
 
-            string name = ((ISet<string>)this.Request.FormData["name"]).FirstOrDefault();
-            string link = ((ISet<string>)this.Request.FormData["link"]).FirstOrDefault();
-            string price = ((ISet<string>)this.Request.FormData["price"]).FirstOrDefault();
-
-            Track trackForDb = new Track
-            {
-                Name = name,
-                Link = link,
-                Price = decimal.Parse(price)
-            };
-
-            if (!this.albumService.AddTrackToAlbum(albumId, trackForDb))
-            {
-                return this.Redirect("/Albums/All");
-            }
-
-            return this.Redirect($"/Albums/Details?id={albumId}");
+            return this.Redirect($"/Albums/Details?id={model.AlbumId}");
         }
 
         [Authorize]
-        public ActionResult Details()
+        public IActionResult Details(TrackDetailsInputModel model)
         {
-            string albumId = this.Request.QueryData["albumId"].ToString();
-            string trackId = this.Request.QueryData["trackId"].ToString();
-
-            using (var context = new RunesDbContext())
+            if (!this.ModelState.IsValid)
             {
-                Track trackFromDb = context.Tracks.SingleOrDefault(track => track.Id == trackId);
-
-                if (trackFromDb == null)
-                {
-                    return this.Redirect($"/Albums/Details?id={albumId}");
-                }
-
-                this.ViewData["AlbumId"] = albumId;
-                this.ViewData["Track"] = trackFromDb.ToHtmlDetails(albumId);
-                return this.View(new AlbumDetailsViewModel { AlbumId = albumId });
+                return this.Redirect($"Albums/All");
             }
+
+            Track trackFromDb = this.trackService.GetTrackById(model.TrackId);
+
+            if (trackFromDb == null)
+            {
+                return this.Redirect($"/Albums/Details?id={model.AlbumId}");
+            }
+
+            TrackDetailsViewModel trackDetailsViewModel = ModelMapper.ProjectTo<TrackDetailsViewModel>(trackFromDb);
+
+            trackDetailsViewModel.AlbumId = model.AlbumId;
+
+            return this.View(trackDetailsViewModel);
         }
     }
 }

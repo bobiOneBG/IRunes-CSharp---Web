@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
+    using SIS.MvcFramework.Mapping;
     using System.IO;
     using System.Xml.Serialization;
 
@@ -23,6 +24,11 @@
                  {
                      ContractResolver = new CamelCasePropertyNamesContractResolver()
                  });
+        }
+
+        public static TDestination To<TDestination>(this object obj)
+        {
+            return ModelMapper.ProjectTo<TDestination>(obj);
         }
     }
 }

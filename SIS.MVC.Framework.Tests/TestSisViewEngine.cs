@@ -1,5 +1,6 @@
-namespace SIS.MvcFramework.Tests
+﻿namespace SIS.MvcFramework.Tests
 {
+    using SIS.Mvc.Framework.Validation;
     using SIS.MvcFramework.ViewEngine;
     using System.Collections.Generic;
     using System.IO;
@@ -7,6 +8,7 @@ namespace SIS.MvcFramework.Tests
 
     public class TestSisViewEngine
     {
+
         [Theory]
         [InlineData("TestWithoutCSharpCode")]
         [InlineData("UseForForeachAndIf")]
@@ -22,9 +24,12 @@ namespace SIS.MvcFramework.Tests
 
             var actualResult = viewEngine.GetHtml<object>(viewContent, new TestViewModel()
             {
-                StringValue = "str",
+                StringValue = "str",                
                 ListValues = new List<string> { "123", "val1", string.Empty },
-            });
+            }, 
+            new ModelStateDictionary(),
+            new Identity.Principal() { });
+
             Assert.Equal(expectedResult.TrimEnd(), actualResult.TrimEnd());
         }
     }
