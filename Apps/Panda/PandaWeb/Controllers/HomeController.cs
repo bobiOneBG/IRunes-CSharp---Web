@@ -14,7 +14,7 @@
 
         public IActionResult Index()
         {
-            return this.Json(new { prop="sss"})/*this.View()*/;
+            return this.View();
         }
     }
 }
