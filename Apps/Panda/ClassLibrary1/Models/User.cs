@@ -8,7 +8,7 @@
     {
         public User()
         {
-            this.Id = new Guid().ToString();
+            this.Id =Guid.NewGuid().ToString();
 
             this.Packages = new HashSet<Package>();
 

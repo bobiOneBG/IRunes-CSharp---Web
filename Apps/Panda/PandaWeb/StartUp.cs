@@ -1,6 +1,7 @@
 ﻿namespace PandaWeb
 {
     using Panda.Data;
+    using Panda.Services;
     using SIS.MvcFramework;
     using SIS.WebServer.Routing.Contracts;
     using IServiceProvider = SIS.Mvc.Framework.DependancyConrainer.IServiceProvider;
@@ -17,6 +18,7 @@
 
         public void ConfigureServices(IServiceProvider serviceProvider)
         {
+            serviceProvider.Add<IUsersSevice, UsersSevice>();
         }
     }
 }

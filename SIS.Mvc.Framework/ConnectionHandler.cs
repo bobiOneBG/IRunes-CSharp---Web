@@ -1,4 +1,4 @@
-﻿namespace SIS.MvcFramework
+﻿ namespace SIS.MvcFramework
 {
     using SIS.Common;
     using SIS.HTTP.Cookies;
