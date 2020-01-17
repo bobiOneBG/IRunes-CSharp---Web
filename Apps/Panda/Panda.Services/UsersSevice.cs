@@ -2,11 +2,12 @@
 {
     using Panda.Data;
     using Panda.Data.Models;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
 
-    public class UsersSevice : IUsersSevice
+    public class UsersSevice : IUsersService
     {
         private readonly PandaDbContext db;
 
@@ -31,6 +32,13 @@
             return user.Id;
         }
 
+        public IEnumerable<string> GetUsersnames()
+        {
+            var userNames = db.Users.Select(user=>user.Username).ToList();
+
+            return userNames;
+        }
+
         public User GetUserOrNull(string username, string password)
         {
             var passwordHash = this.HashPassword(password);
@@ -45,6 +53,13 @@
             {
                 return Encoding.UTF8.GetString(sHA256.ComputeHash(Encoding.UTF8.GetBytes(password)));
             };
+        }
+
+        public IEnumerable<string> GetUsernames()
+        {
+            var userNames = db.Users.Select(u => u.Username).ToList();
+
+            return userNames;
         }
     }
 }

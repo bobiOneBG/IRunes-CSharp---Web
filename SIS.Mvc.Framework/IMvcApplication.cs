@@ -1,6 +1,6 @@
 ﻿namespace SIS.MvcFramework
 {
-    using SIS.Mvc.Framework.DependancyConrainer;
+    using SIS.Mvc.Framework.DependencyConrainer;
     using SIS.WebServer.Routing.Contracts;
 
     public interface IMvcApplication

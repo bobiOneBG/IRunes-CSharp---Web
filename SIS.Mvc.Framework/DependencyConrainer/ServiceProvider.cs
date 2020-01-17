@@ -5,24 +5,26 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using IServiceProvider = DependancyConrainer.IServiceProvider;
 
-    public class ServiceProvider : IServiceProvider
+    public class ServiceProvider : SIS.Mvc.Framework.DependencyConrainer.IServiceProvider
     {
         private readonly IDictionary<Type, Type> dependencyContainer =
             new ConcurrentDictionary<Type, Type>();
 
+        public IDictionary<Type, Type> DependencyContainer => this.dependencyContainer;
+
         public void Add<TSource, TDestination>()
             where TDestination : TSource
         {
-            dependencyContainer[typeof(TSource)] = typeof(TDestination);
+            DependencyContainer[typeof(TSource)] = typeof(TDestination);
         }
-
+         
         public object CreateInstance(Type type)
         {
-            if (dependencyContainer.ContainsKey(type))
+            Console.WriteLine(type.Name);
+            if (DependencyContainer.ContainsKey(type))
             {
-                type = dependencyContainer[type];
+                type = DependencyContainer[type];
             }
 
             var constructor = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance)

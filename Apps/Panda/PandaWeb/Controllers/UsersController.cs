@@ -9,9 +9,9 @@
 
     public class UsersController : Controller
     {
-        private readonly IUsersSevice userService;
+        private readonly IUsersService userService;
 
-        public UsersController(IUsersSevice userService)
+        public UsersController(IUsersService userService)
         {
             this.userService = userService;
         }

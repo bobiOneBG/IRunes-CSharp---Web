@@ -19,11 +19,13 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasMany(x=>x.Packages)
-                .WithOne(x=>x.Recipient).HasForeignKey(x=>x.RecipientId)
+                .WithOne(x=>x.Recipient)
+                .HasForeignKey(x=>x.RecipientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>().HasMany(x => x.Receipts)
-                .WithOne(x => x.Recipient).HasForeignKey(x => x.RecipientId)
+                .WithOne(x => x.Recipient)
+                .HasForeignKey(x => x.RecipientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);

@@ -1,4 +1,4 @@
-﻿namespace SIS.Mvc.Framework.DependancyConrainer
+﻿namespace SIS.Mvc.Framework.DependencyConrainer
 {
     using System;
 

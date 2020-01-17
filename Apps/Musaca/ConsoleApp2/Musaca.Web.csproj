@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\.idea\misc.xml" />
+    <Content Include="Resources\.idea\modules.xml" />
+    <Content Include="Resources\.idea\workspace.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\.idea\Front-End.iml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SIS.Mvc.Framework\SIS.Mvc.Framework.csproj" />
+    <ProjectReference Include="..\Musaca.Data\Musaca.Data.csproj" />
+  </ItemGroup>
+
+</Project>

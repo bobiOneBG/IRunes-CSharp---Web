@@ -29,7 +29,7 @@
         {
             IServerRoutingTable serverRoutingTable = new ServerRoutingTable();
             IHttpSessionStorage httpSessionStorage = new HttpSessionStorage();
-            Mvc.Framework.DependancyConrainer.IServiceProvider serviceProvider = new ServiceProvider();
+            Mvc.Framework.DependencyConrainer.IServiceProvider serviceProvider = new ServiceProvider();
             serviceProvider.Add<ILogger, ConsoleLogger>();
 
             application.ConfigureServices(serviceProvider);
@@ -43,7 +43,7 @@
         private static void AutoRegisterRoutes(
             IMvcApplication application,
             IServerRoutingTable serverRoutingTable,
-            Mvc.Framework.DependancyConrainer.IServiceProvider serviceProvider)
+            Mvc.Framework.DependencyConrainer.IServiceProvider serviceProvider)
         {
             var controllers = application.GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass && !type.IsAbstract
@@ -87,7 +87,7 @@
         }
 
         private static IHttpResponse ProcessRequest(
-            Mvc.Framework.DependancyConrainer.IServiceProvider serviceProvider,
+            Mvc.Framework.DependencyConrainer.IServiceProvider serviceProvider,
             System.Type controllerType,
             MethodInfo action,
             IHttpRequest request)

@@ -6,7 +6,7 @@
 
     public class HomeController : Controller
     {
-        [HttpGet(Url ="/")]
+        [HttpGet(Url = "/")]
         public IActionResult IndexSlash()
         {
             return this.Index();
