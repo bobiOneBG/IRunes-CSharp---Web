@@ -29,7 +29,8 @@
                 return this.Redirect("/Users/Login");
             }
 
-            var user = this.userService.GetUserOrNull(model.Username, model.Password);
+            var user = this
+                .userService.GetUserOrNull(model.Username, model.Password);
 
             if (user == null)
             {

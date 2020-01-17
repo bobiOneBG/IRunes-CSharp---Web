@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Panda.Data.csproj" />
+    <ProjectReference Include="E:\FirefoxDownload\csharp-web-master\csharp-web-master\2019-May-Season\SoftUni-Information-Services\src\Apps\Panda\Panda.Data\Panda.Data.csproj" />
   </ItemGroup>
 
 </Project>

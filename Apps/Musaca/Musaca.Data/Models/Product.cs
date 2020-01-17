@@ -1,5 +1,6 @@
 ﻿namespace Musaca.Data.Models
 {
+    using SIS.Mvc.Framework.Attributes.Validation;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -7,15 +8,15 @@
     {
         public Product()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
 
-        public string Id { get; set; }
+        public string Id { get; set; }//- a GUID String, Primary Key
 
-        [Required]
+        [RequiredSIS]
         [MaxLength(10)]
-        public string Name { get; set; }
+        public string Name { get; set; }//- a string with min length 3 and max length 10 (required)
 
-        public decimal Price { get; set; }
+        public decimal Price { get; set; } //– a decimal with min value – 0.01.
     }
 }

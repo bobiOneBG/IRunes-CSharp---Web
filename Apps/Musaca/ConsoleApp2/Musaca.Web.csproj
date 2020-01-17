@@ -6,18 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\.idea\misc.xml" />
-    <Content Include="Resources\.idea\modules.xml" />
-    <Content Include="Resources\.idea\workspace.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Resources\.idea\Front-End.iml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\SIS.Mvc.Framework\SIS.Mvc.Framework.csproj" />
     <ProjectReference Include="..\Musaca.Data\Musaca.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Products\" />
+    <Folder Include="Views\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\Home\Index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Views\Home\IndexLoggedIn.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

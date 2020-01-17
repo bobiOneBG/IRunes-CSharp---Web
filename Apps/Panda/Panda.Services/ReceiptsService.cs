@@ -1,5 +1,4 @@
-﻿
-namespace Panda.Services
+﻿namespace Panda.Services
 {
     using Panda.Data;
     using Panda.Data.Models;
