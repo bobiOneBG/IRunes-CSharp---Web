@@ -150,6 +150,8 @@
             IHttpResponse httpResponse = null;
             try
             {
+                
+                
                 IHttpRequest httpRequest = await this.ReadRequestAsync();
 
                 if (httpRequest != null)
@@ -158,6 +160,7 @@
 
                     string sessionId = this.SetRequestSession(httpRequest);
 
+                    
                     httpResponse = this.HandleRequest(httpRequest);
 
                     this.SetResponseSession(httpResponse, sessionId);

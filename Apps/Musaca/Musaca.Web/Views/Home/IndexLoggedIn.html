@@ -1,8 +1,66 @@
-﻿<hr class="bg-panda" style="height: 2px" />
-<main>
-    <div class="jumbotron bg-panda text-white" style="background: black">
-        <h1>Hello, @User.Username</h1>
-        <hr class="bg-white" style="height: 2px" />
-        <h2>We wish you a fun experience.</h2>
+﻿<main class="mt-3">
+    <form class="" method="post" action="/Orders/Order">
+        <div class="form-group w-50 d-flex justify-content-start">
+            <div class="label-holder">
+                <label for="barcode" class="text-musaca p-2 m-0 font-weight-bold border-musaca">Product</label>
+            </div>
+            <input type="text" class="form-control ml-5 w-25 font-weight-bold" id="product" placeholder="Product..." name="product">
+            <div class="button-holder ml-5 my-1">
+                <button type="submit" class="btn bg-musaca p-2 font-weight-bold text-white" style="background: #32CD32">Order</button>
+            </div>
+        </div>
+    </form>
+    <hr class="hr-2 bg-musaca">
+    <div class="products-holder mt-4">
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>Product Name</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">Price</h4>
+            </div>
+        </div>
+        <hr class="hr-2 bg-musaca">
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>"MishMash" in "burkan"</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">$20.00</h4>
+            </div>
+        </div>
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>Salam</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">$3.00</h4>
+            </div>
+        </div>
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>Beer Nuts</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">$1.25</h4>
+            </div>
+        </div>
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>Coca Cola 2l.</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">$2.50</h4>
+            </div>
+        </div>
+    </div>
+    <hr class="hr-2 bg-musaca">
+    <div class="finish-order-holder d-flex justify-content-between">
+        <div class="form-holder w-25">
+           <button type="submit" class="btn bg-musaca font-weight-bold px-5 py-2" style="background: #32CD32" href="/Orders/Cashout">Cashout</button>           
+        </div>
+        <div class="price-holder w-25">
+            <h2 class="text-right">Total: $26.75</h2>
+        </div>
     </div>
 </main>

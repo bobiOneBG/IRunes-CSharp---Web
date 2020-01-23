@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="E:\FirefoxDownload\csharp-web-master\csharp-web-master\2019-May-Season\SoftUni-Information-Services\src\Apps\Panda\Panda.Data\Panda.Data.csproj" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Panda.Data\Panda.Data.csproj" />
   </ItemGroup>
 
 </Project>

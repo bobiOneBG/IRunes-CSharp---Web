@@ -21,7 +21,6 @@
          
         public object CreateInstance(Type type)
         {
-            Console.WriteLine(type.Name);
             if (DependencyContainer.ContainsKey(type))
             {
                 type = DependencyContainer[type];

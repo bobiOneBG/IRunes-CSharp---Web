@@ -9,6 +9,7 @@
         public Order()
         {
             Id = Guid.NewGuid().ToString();
+            this.Status = OrderStatus.Active;
             this.Products = new List<Product>();
         }
         public string Id { get; set; }   

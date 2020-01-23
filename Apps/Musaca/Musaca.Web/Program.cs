@@ -1,11 +1,10 @@
-﻿using SIS.MvcFramework;
-using System;
-
-namespace Musaca.Web
+﻿namespace Musaca.Web
 {
-  public  class Program
+    using SIS.MvcFramework;
+
+    public class Program
     {
-      public  static void Main()
+        public static void Main()
         {
             WebHost.Start(new StartUp());
         }

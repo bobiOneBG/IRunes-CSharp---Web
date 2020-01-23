@@ -1,7 +1,7 @@
-﻿namespace PandaWeb.Controllers
+﻿namespace Musaca.Web.Controllers
 {
-    using Panda.Services;
-    using PandaWeb.VIewModel.Users;
+    using Musaca.Services;
+    using Musaca.Web.ViewModels.Users;
     using SIS.MvcFramework;
     using SIS.MvcFramework.Attributes;
     using SIS.MvcFramework.Attributes.Security;
@@ -9,13 +9,13 @@
 
     public class UsersController : Controller
     {
-        private readonly IUsersService userService;
+        private readonly IUsersService usersService;
 
-        public UsersController(IUsersService userService)
+        public UsersController(IUsersService usersService)
         {
-            this.userService = userService;
+            this.usersService = usersService;
         }
-
+        
         public IActionResult Login()
         {
             return this.View();
@@ -29,17 +29,18 @@
                 return this.Redirect("/Users/Login");
             }
 
-            var user = this
-                .userService.GetUserOrNull(model.Username, model.Password);
+            var user = this.usersService.GetUserOrNull(model.Username, model.Password);
 
             if (user == null)
             {
                 return this.Redirect("/Users/Login");
             }
 
-            this.SignIn(user.Id, user.Username, user.Password);
+             usersService.CreateOrderIfIsNotActive(user.Id);            
 
-            return this.View("/");
+            this.SignIn(user.Id, user.Username, user.Email);
+
+            return this.Redirect("/");
         }
 
         public IActionResult Register()
@@ -60,7 +61,9 @@
                 return this.Redirect("/Users/Register");
             }
 
-            var userId = this.userService.CreateUser(model.Username, model.Password, model.Email);
+            var userId = this.usersService.CreateUser(model.Username, model.Password, model.Email);
+
+            this.usersService.CreateOrder(userId);
 
             this.SignIn(userId, model.Username, model.Email);
 
@@ -68,11 +71,17 @@
         }
 
         [Authorize]
+        public IActionResult Profile()
+        {
+            return this.View();
+        }
+
+        [Authorize]
         public IActionResult Logout()
         {
             this.SignOut();
 
-            return this.Redirect("/");
+            return Redirect("/");
         }
     }
 }

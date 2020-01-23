@@ -16,7 +16,7 @@
         {
             if (this.IsLoggedIn())
             {
-                return View("");
+                return View("IndexLoggedIn");
             }
 
             return View();

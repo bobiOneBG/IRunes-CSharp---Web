@@ -59,8 +59,8 @@
             // TODO: Support for layout
             string controllerName = this.GetType().Name.Replace("Controller", string.Empty);
             string viewName = view;
-            string fullPath = "Views/" + controllerName + "/" + viewName + ".html";
-            string viewContent = System.IO.File.ReadAllText(fullPath);
+
+            string viewContent = System.IO.File.ReadAllText("Views/" + controllerName + "/" + viewName + ".html");
             viewContent = this.viewEngine.GetHtml(viewContent, model, this.ModelState, this.User);
 
             string layoutContent = System.IO.File.ReadAllText("Views/_Layout.html");

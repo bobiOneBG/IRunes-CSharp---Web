@@ -1,12 +1,12 @@
-﻿using Panda.Data.Models;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Panda.Services
+﻿namespace Panda.Services
 {
+
+    using Panda.Data.Models;
+    using System.Linq;
+
     public interface IPackagesService
     {
-        void Create(string description, 
+        void Create(string description,
             decimal weight, string shippingAdress, string receipientName);
 
         IQueryable<Package> GetAllByStatus(PackageStatus status);
