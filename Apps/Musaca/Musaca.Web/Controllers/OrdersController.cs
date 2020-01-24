@@ -6,29 +6,43 @@
     using SIS.MvcFramework.Attributes;
     using SIS.MvcFramework.Attributes.Security;
     using SIS.MvcFramework.Result;
+    using System.Linq;
 
     public class OrdersController : Controller
     {
         private readonly OrdersService ordersService;
+        private readonly IUsersService usersService;
 
-        public OrdersController(OrdersService ordersService)
+        public OrdersController(OrdersService ordersService, IUsersService usersService)
         {
             this.ordersService = ordersService;
+            this.usersService = usersService;
         }
 
         [HttpPost]
         [Authorize]
         public IActionResult Order(OrdersAddProductModel model)
         {
-            ordersService.AddProductToOrder(this.User.Id, model.Product);
-            return Redirect("/Products/All");
+            this.ordersService.AddProductToOrder(this.User.Id, model.Product);
+
+            var products = this.ordersService.GetCurrentOrderProducts(this.User.Id)
+                .Select(x => new OrderProductsViewModel
+                {
+                    Name = x.Name,
+                    Price = x.Price
+                });
+
+            return this.View(new OrderListProductsViewModel { Products = products });
         }
 
-        //TO DO
         [Authorize]
         public IActionResult Cashout()
         {
-            throw new System.Exception();
-        }
+            ordersService.CashoutOrder(this.User.Id);
+
+            usersService.CreateOrderIfIsNotActive(this.User.Id);
+
+            return this.Redirect("/");
+        }        
     }
 }

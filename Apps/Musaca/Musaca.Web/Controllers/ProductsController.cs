@@ -6,6 +6,7 @@
     using SIS.MvcFramework.Attributes;
     using SIS.MvcFramework.Attributes.Security;
     using SIS.MvcFramework.Result;
+    using System.Linq;
 
     public class ProductsController : Controller
     {
@@ -17,20 +18,26 @@
         }
 
         [Authorize]
-        public IActionResult All()
-        {
-            return this.View();
-        }
-
-        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        [Authorize]
+        public IActionResult All()
+        {
+            var allProducts = productsService.GetAllProducts()
+                .Select(x => new AllProductsViewModel
+                {
+                    Name=x.Name,
+                    Price=x.Price
+                });
+
+            return this.View(allProducts);
+        }
 
         [HttpPost]
-        [Authorize]        
+        [Authorize]
         public IActionResult Create(CreateInputModel model)
         {
             if (!ModelState.IsValid)

@@ -1,4 +1,5 @@
-﻿ namespace SIS.MvcFramework
+﻿namespace SIS.MvcFramework
+
 {
     using SIS.Common;
     using SIS.HTTP.Cookies;
@@ -22,19 +23,19 @@
     {
         private readonly Socket client;
 
-        private readonly IHttpSessionStorage sessionStorage;
-
         private readonly IServerRoutingTable serverRoutingTable;
 
-        public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable, IHttpSessionStorage sessionStorage)
+        private readonly IHttpSessionStorage httpSessionStorage;
+
+        public ConnectionHandler(Socket client, IServerRoutingTable serverRoutingTable, IHttpSessionStorage httpSessionStorage)
         {
-            ValidationExtensions.ThrowIfNull(client, nameof(client));
-            ValidationExtensions.ThrowIfNull(serverRoutingTable, nameof(serverRoutingTable));
-            ValidationExtensions.ThrowIfNull(sessionStorage, nameof(sessionStorage));
+            client.ThrowIfNull(nameof(client));
+            serverRoutingTable.ThrowIfNull(nameof(serverRoutingTable));
+            httpSessionStorage.ThrowIfNull(nameof(httpSessionStorage));
 
             this.client = client;
             this.serverRoutingTable = serverRoutingTable;
-            this.sessionStorage = sessionStorage;
+            this.httpSessionStorage = httpSessionStorage;
         }
 
         private async Task<IHttpRequest> ReadRequestAsync()
@@ -110,9 +111,9 @@
 
                 string sessionId = cookie.Value;
 
-                if (sessionStorage.ContainsSession(sessionId))
+                if (this.httpSessionStorage.ContainsSession(sessionId))
                 {
-                    httpRequest.Session = this.sessionStorage.GetSession(sessionId);
+                    httpRequest.Session = this.httpSessionStorage.GetSession(sessionId);
                 }
             }
 
@@ -120,7 +121,7 @@
             {
                 string sessionId = Guid.NewGuid().ToString();
 
-                httpRequest.Session = this.sessionStorage.GetSession(sessionId);
+                httpRequest.Session = this.httpSessionStorage.GetSession(sessionId);
             }
 
             return httpRequest.Session?.Id;
@@ -128,7 +129,7 @@
 
         private void SetResponseSession(IHttpResponse httpResponse, string sessionId)
         {
-            IHttpSession responseSession = this.sessionStorage.GetSession(sessionId);
+            IHttpSession responseSession = this.httpSessionStorage.GetSession(sessionId);
 
             if (responseSession.IsNew)
             {
@@ -143,15 +144,13 @@
             byte[] byteSegments = httpResponse.GetBytes();
 
             this.client.Send(byteSegments, SocketFlags.None);
-        } 
+        }
 
         public async Task ProcessRequestAsync()
         {
             IHttpResponse httpResponse = null;
             try
             {
-                
-                
                 IHttpRequest httpRequest = await this.ReadRequestAsync();
 
                 if (httpRequest != null)
@@ -160,7 +159,6 @@
 
                     string sessionId = this.SetRequestSession(httpRequest);
 
-                    
                     httpResponse = this.HandleRequest(httpRequest);
 
                     this.SetResponseSession(httpResponse, sessionId);
@@ -170,12 +168,10 @@
             {
                 httpResponse = new TextResult(e.ToString(), HttpResponseStatusCode.BadRequest);
             }
-
             catch (Exception e)
             {
                 httpResponse = new TextResult(e.ToString(), HttpResponseStatusCode.InternalServerError);
             }
-
             this.PrepareResponse(httpResponse);
 
             this.client.Shutdown(SocketShutdown.Both);

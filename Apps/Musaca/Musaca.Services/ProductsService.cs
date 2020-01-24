@@ -2,6 +2,8 @@
 {
     using Musaca.Data;
     using Musaca.Data.Models;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ProductsService : IProductsService
     {
@@ -23,6 +25,13 @@
             db.Products.Add(product);
 
             db.SaveChanges();
+        }
+
+        public IQueryable<Product> GetAllProducts()
+        {
+            var products = db.Products;
+
+            return products;
         }
     }
 }

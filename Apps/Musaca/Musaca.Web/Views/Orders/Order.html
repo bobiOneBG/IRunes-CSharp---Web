@@ -1,5 +1,4 @@
-﻿
-<main class="mt-3">
+﻿<main class="mt-3">
     <form class="" method="post" action="/Orders/Order">
         <div class="form-group w-50 d-flex justify-content-start">
             <div class="label-holder">
@@ -22,12 +21,29 @@
             </div>
         </div>
         <hr class="hr-2 bg-musaca">
+        @if(Model.Products != null)
+        {
+        @foreach (var product in Model.Products)
+        {
+        <div class="product d-flex justify-content-between">
+            <div class="product-name w-75">
+                <h4>@product.Name</h4>
+            </div>
+            <div class="product-quantity-and-price d-flex justify-content-end w-25">
+                <h4 class="text-center w-50">@product.Price</h4>
+            </div>
+        </div>
+        }
+        }
 
     </div>
     <hr class="hr-2 bg-musaca">
     <div class="finish-order-holder d-flex justify-content-between">
         <div class="form-holder w-25">
             <a class="btn bg-musaca font-weight-bold px-5 py-2" style="background: #32CD32" href="/Orders/Cashout">Cashout</a>
+        </div>
+        <div class="price-holder w-25">
+            <h2 class="text-right">Total: $@Model.Products.Sum(p=>p.Price)</h2>
         </div>
     </div>
 </main>

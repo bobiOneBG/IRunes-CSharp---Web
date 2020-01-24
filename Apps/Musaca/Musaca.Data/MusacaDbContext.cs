@@ -21,7 +21,7 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()
-                .HasMany(x => x.Products);
+                .HasMany(x=>x.Products);
 
             base.OnModelCreating(modelBuilder);
         }

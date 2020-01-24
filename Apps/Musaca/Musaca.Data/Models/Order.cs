@@ -17,7 +17,7 @@
         public OrderStatus Status { get; set; }    
 
         public DateTime IssuedOn { get; set; }   
-
+        [RequiredSIS]
         public ICollection<Product> Products { get; set; }  
 
         [RequiredSIS]

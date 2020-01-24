@@ -1,11 +1,13 @@
 ﻿namespace Musaca.Web.Controllers
 {
     using Musaca.Services;
+    using Musaca.Web.ViewModels.Products;
     using Musaca.Web.ViewModels.Users;
     using SIS.MvcFramework;
     using SIS.MvcFramework.Attributes;
     using SIS.MvcFramework.Attributes.Security;
     using SIS.MvcFramework.Result;
+    using System.Linq;
 
     public class UsersController : Controller
     {
@@ -73,7 +75,16 @@
         [Authorize]
         public IActionResult Profile()
         {
-            return this.View();
+            var orders = usersService.GetUserOrders(this.User.Id)
+                .Select(x=>new AllOrdersViewModel 
+                {
+                    Id=x.Id,
+                    IssuedOn=x.IssuedOn,
+                    Price=x.Products.Sum(x=>x.Price),
+                    Username=x.Cashier.Username
+                });
+
+            return this.View(orders);
         }
 
         [Authorize]
